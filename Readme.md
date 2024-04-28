@@ -2,93 +2,110 @@
 
 
 
-============================ Erforderliche HACs Komponenten
+# 1. Erforderliche HACs Komponenten
 - Mushroom
 - card-mod
 - Stack In Card
 - Bambu Lab
 - Google Dark Theme
 
-============================ Drucker importieren in BambuLab Geräte
-[] Bambu Cloud Configuration, nicht LAN!
-[] Europe
+ 
 
-[] Verbinden Sie sich direkt mit dem Drucker statt über die Bambu Cloud <--- aktivieren
+# 2. Drucker importieren in BambuLab Geräte
+- Bambu Cloud Configuration, nicht LAN!
+- Europe
+- Verbinden Sie sich direkt mit dem Drucker statt über die Bambu Cloud <--- aktivieren
 
 
-============================ Drucker importieren in BambuLab Geräte
+# 3. Drucker importieren in BambuLab Geräte
 -> Einstellungen -> Geräte & Dienste -> Integration 
+
 -> Generiesche Kamera anlegen
 
-Standbild URL: (leer lassen)
-Stream Quell URL: rtsps://<printer-ip>/streaming/live/1
-RTSP Protokol: TCP
-Authentifizierung: basic
-Benutzername: bblp
-Passwort: <lan-access-code>
-Bildfrequenz: 30
-SSL-Zertifikat überprüfen: deaktivieren
+
+| Option                    | Setting                               |
+| ------------------------- | ------------------------------------- |
+| Standbild URL             | (leer lassen)                         |
+| Stream Quell URL          | rtsps://<printer-ip>/streaming/live/1 |
+| RTSP Protokol             | TCP                                   |
+| Authentifizierung         | basic                                 |
+| Benutzername              | bblp                                  |
+| Passwort                  | <lan-access-code>                     |
+| Bildfrequenz              | 30                                    |
+| SSL-Zertifikat überprüfen | deaktivieren                          |
 
 
-============================ Inhalte des www Ordners übertragen
+# 4. Inhalte des www Ordners übertragen
 Entweder über SambaShare oder File editor einzeln 
 www Ordner sollte existieren, die anderen müssen angelegt werden
 
 
-============================ Daten ermitteln um diese nachfolgend und im Dashboard zu ersetzen
+# 5. Daten ermitteln um diese nachfolgend und im Dashboard zu ersetzen
 
-================= Drucker             BEISPIELE!
-<BAMBULABPRINTER_ID> 				- x1c_00m00a000000000
-<BAMBULABPRINTER_AMS_ID> 			- x1c_00m00a000000000_ams
+| Drucker                   | BEISPIELE!              |
+| ------------------------- | ----------------------- |
+| <BAMBULABPRINTER_ID> 			|	x1c_00m00a000000000     |
+| <BAMBULABPRINTER_AMS_ID> 	|	x1c_00m00a000000000_ams |
 
-================= Powerschalter
-<POWER_SWITCH_ID>					- switch.powerprinterrack1_2
-<POWER_POWERMETER_ID>				- sensor.powerprinterrack1_2_power
-<POWER_VOLTAGEMETER_ID>				- sensor.powerprinterrack1_2_voltage
-<POWER_CURRENTMETER_ID>				- sensor.powerprinterrack1_2_current
-<POWER_DAYENERGYMETER_ID>			- sensor.powerprinterrack1_2_total_daily_energy
-<POWER_TOTALENERGYMETER_ID>			- sensor.powerprinterrack1_2_energy
+| Powerschalter               | BEISPIELE!                                    |
+| --------------------------- | --------------------------------------------- |
+| <POWER_SWITCH_ID>					  | switch.powerprinterrack1_2                    | 
+| <POWER_POWERMETER_ID>				| sensor.powerprinterrack1_2_power              | 
+| <POWER_VOLTAGEMETER_ID>			| sensor.powerprinterrack1_2_voltage            | 
+| <POWER_CURRENTMETER_ID>			| sensor.powerprinterrack1_2_current            | 
+| <POWER_DAYENERGYMETER_ID>		| sensor.powerprinterrack1_2_total_daily_energy | 
+| <POWER_TOTALENERGYMETER_ID> | sensor.powerprinterrack1_2_energy             | 
 
-================= Kamera
-<CAM_ID>							- camera.10_10_5_91
+| Kamera    | BEISPIELE!        |
+| --------- | ----------------- |
+| <CAM_ID>  | camera.10_10_5_91 |
 
-============================ Zähler als Helfer anlegen 
+# 6. Zähler als Helfer anlegen 
 -> Einstellungen -> Geräte & Dienste -> Helfer
 -> Helfer erstellen -> Zähler
 
 
-name: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
-icon mdi:wrench-clock
-Minimaler Wert: 0
-Anfangswert: 0
-Schrittgröße: 1
+| Feld           | Wert              |
+| -------------- | ----------------- |
+| Name           | printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods |
+| Icon           | mdi:wrench-clock  |
+| Minimaler Wert | 0 |
+| Anfangswert    | 0 |
+| Schrittgröße   | 1 |
 
-name: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
-icon mdi:wrench-clock
-Minimaler Wert: 0
-Anfangswert: 0
-Schrittgröße: 1
+| Feld           | Wert              |
+| -------------- | ----------------- |
+| Name           | printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods |
+| Icon           | mdi:wrench-clock  |
+| Minimaler Wert | 0 |
+| Anfangswert    | 0 |
+| Schrittgröße   | 1 |
 
-name: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
-icon mdi:wrench-clock
-Minimaler Wert: 0
-Anfangswert: 0
-Schrittgröße: 1
+| Feld           | Wert              |
+| -------------- | ----------------- |
+| Name           | printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle |
+| Icon           | mdi:wrench-clock  |
+| Minimaler Wert | 0 |
+| Anfangswert    | 0 |
+| Schrittgröße   | 1 |
 
-name: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
-icon mdi:wrench-clock
-Minimaler Wert: 0
-Anfangswert: 0
-Schrittgröße: 1
+| Feld           | Wert              |
+| -------------- | ----------------- |
+| Name           | printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice |
+| Icon           | mdi:wrench-clock  |
+| Minimaler Wert | 0 |
+| Anfangswert    | 0 |
+| Schrittgröße   | 1 |
 
+# 7. Automatisierung anlegen
+Einstellungen -> Automatisierungen & Szenen
 
-
-============================ Automatisierung anlegen
--> Einstellungen -> Automatisierungen & Szenen
 -> Automatisierung erstellen -> Neue Automatisierung erstellen
+
 -> Rechts oben, 3 Punkte -> Als YAML bearbeiten
 
 
+```
 alias: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_count
 description: ""
 trigger:
@@ -113,14 +130,14 @@ action:
         - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
         - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
 mode: single
-
-
+```
 
 -> Speichern -> Umbennen -> 
 
-============================ Seite anlegen und alle <IDs> in yaml ersetzen
+# 8. Seite anlegen und alle <IDs> in yaml ersetzen
 
 YAML Template der Seite je nachdem was beim Bambu in den Entitäten stehen
 
 Heisst der "Aktiver Slot" als Entitäts-ID "active_tray" am ende -> en_yaml
+
 Heisst der "Aktiver Slot" als Entitäts-ID "aktiver_slot" am ende -> de_yaml
