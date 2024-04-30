@@ -763,7 +763,16 @@ sections:
                 state: "on"
             card:
               type: custom:mushroom-template-card
-              primary: Fehler erkannt!
+			  primary: >-
+                {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
+                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
+                {% if alertLevel == '0002' %}
+                Warnung
+                {% elif alertLevel == '0003' %}
+                Information
+                {% else %}
+                Fehler erkannt!
+                {% endif %}
               secondary: >-
                 {{
                 state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error')
@@ -773,7 +782,16 @@ sections:
                 {{
                 state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Wiki')
                 }}
-              icon: mdi:alert
+              icon: >-
+                {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
+                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
+                {% if alertLevel == '0002' %}
+                mdi:alert-circle
+                {% elif alertLevel == '0003' %}
+                mdi:information
+                {% else %}
+                mdi:alert
+                {% endif %}
               layout: horizontal
               tap_action:
                 action: none
@@ -787,7 +805,16 @@ sections:
               card_mod:
                 style: |
                   ha-card {
+                    {% set errorMessage = {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
+                    {% set alertLevel = errorMessage[14:] %}
+                    {% set alertLevel = alertLevel[:4] %}
+                    {% if alertLevel == '0002' %}
+                    background-color: rgba(255,152,0,0.5);
+                    {% elif alertLevel == '0003' %}
+                    background-color: rgba(33, 150, 243,0.5);
+                    {% else %}
                     background-color: #770000;
+                    {% endif %}
                   }
           - type: custom:stack-in-card
             mode: vertical
