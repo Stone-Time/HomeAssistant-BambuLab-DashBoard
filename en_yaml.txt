@@ -135,6 +135,18 @@ sections:
                   entity: sensor.<BAMBULABPRINTER_ID>_print_status
                   state: running
               card:
+                type: custom:mushroom-select-card
+                entity: select.x1c_<BAMBULABPRINTER_ID>_print_speed
+                fill_container: false
+                name: Druckgeschwindigkeit
+                secondary_info: none
+                layout: horizontal
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_print_status
+                  state: running
+              card:
                 type: custom:mushroom-entity-card
                 entity: button.<BAMBULABPRINTER_ID>_pause_printing
                 name: Druckvorgang anhalten
