@@ -633,7 +633,7 @@ sections:
         double_tap_action:
           action: none
       - type: custom:mushroom-template-card
-        primary: Z-Spindeln schmieren
+        primary: Durcker reinigen
         secondary: >-
           {% if
           (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle')
