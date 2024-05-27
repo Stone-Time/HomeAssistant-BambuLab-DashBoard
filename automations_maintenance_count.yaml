@@ -1,0 +1,34 @@
+alias: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_count
+description: "increases the counters by the difference between new and old trigger value"
+trigger:
+  - platform: state
+    entity_id:
+      - sensor.<BAMBULABPRINTER_ID>_gesamtnutzung
+    alias: "P1S Sensor: Gesamtnutzung"
+condition:
+  - condition: template
+    value_template: |
+      {% set t_new = trigger.to_state.state|default(0)|int %}
+      {% set t_from = trigger.from_state.state|default(0)|int %}
+      {{ t_new >= t_from }}
+    alias: Gesamtnutzung hat sich erhöht?
+action:
+  - alias: Erhöhe Counter n mal (n = Veränderung in Gesamtnutzung)
+    repeat:
+      count: |
+        {% set t_new = trigger.to_state.state|default(0)|int %}
+        {% set t_from = trigger.from_state.state|default(0)|int %}
+        {{ t_new - t_from }}
+      sequence:
+        - service: counter.increment
+          metadata: {}
+          data: {}
+          target:
+            entity_id:
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonfilter
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
+          alias: Erhöhe alle Counter
+mode: single
