@@ -97,6 +97,15 @@ www Ordner sollte existieren, die anderen müssen angelegt werden
 | Anfangswert    | 0 |
 | Schrittgröße   | 1 |
 
+| Feld           | Wert              |
+| -------------- | ----------------- |
+| Name           | printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonfilter |
+| Icon           | mdi:wrench-clock  |
+| Minimaler Wert | 0 |
+| Anfangswert    | 0 |
+| Schrittgröße   | 1 |
+
+
 # 7. Automatisierung anlegen
 Einstellungen -> Automatisierungen & Szenen
 
@@ -120,15 +129,22 @@ condition:
       {% set t_from = trigger.from_state.state|default(0)|int %}
       {{ t_new >= t_from }}
 action:
-  - service: counter.increment
-    metadata: {}
-    data: {}
-    target:
-      entity_id:
-        - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
-        - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
-        - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
-        - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
+    repeat:
+      count: |
+        {% set t_new = trigger.to_state.state|default(0)|int %}
+        {% set t_from = trigger.from_state.state|default(0)|int %}
+        {{ t_new - t_from }}
+      sequence:
+        - service: counter.increment
+          metadata: {}
+          data: {}
+          target:
+            entity_id:
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonfilter
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
+              - counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
 mode: single
 ```
 
