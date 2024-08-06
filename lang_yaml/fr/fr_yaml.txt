@@ -1,0 +1,1661 @@
+title: Imprimante BambuLab
+path: bambulab-printer
+cards: []
+type: sections
+max_columns: 4
+sections:
+  - type: grid
+    cards:
+      - type: custom:mushroom-title-card
+        title: Interrupteur
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: custom:mushroom-entity-card
+        entity: <POWER_SWITCH_ID>
+        name: Alimentation
+        icon_color: green
+        layout: horizontal
+        tap_action:
+          action: toggle
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+        icon: mdi:power
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+        card:
+          type: custom:mushroom-light-card
+          entity: light.<BAMBULABPRINTER_ID>_lumiere_de_la_chambre
+          icon: mdi:lightbulb-outline
+          name: Lumière de la chambre
+          use_light_color: false
+          fill_container: true
+          layout: horizontal
+      - type: custom:mushroom-title-card
+        title: Impression
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unknown
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: vertical-stack
+          cards:
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                  state_not: pause
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                  state_not: running
+              card:
+                type: custom:mushroom-template-card
+                primary: Aucun contrôle disponible
+                secondary: ""
+                icon: ""
+                layout: horizontal
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                  state: running
+              card:
+                type: custom:mushroom-select-card
+                entity: select.<BAMBULABPRINTER_ID>_vitesse_d_impression
+                fill_container: false
+                name: Vitesse d'impression
+                secondary_info: none
+                layout: horizontal
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                  state: running
+              card:
+                type: custom:mushroom-entity-card
+                entity: button.<BAMBULABPRINTER_ID>_mettre_en_pause_l_impression
+                name: Mettre en pause l'impression
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                layout: horizontal
+            - type: conditional
+              conditions:
+                - condition: or
+                  conditions:
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                      state: pause
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                      state: running
+              card:
+                type: custom:mushroom-entity-card
+                name: Arrêter l'impression
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                layout: horizontal
+                entity: button.<BAMBULABPRINTER_ID>_arreter_l_impression
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                  state: pause
+              card:
+                type: custom:mushroom-entity-card
+                name: Reprendre l'impression
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+                layout: horizontal
+                entity: button.<BAMBULABPRINTER_ID>_reprendre_l_impression
+      - type: custom:mushroom-title-card
+        title: Ventilateurs
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unknown
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: vertical-stack
+          cards:
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: fan.<BAMBULABPRINTER_ID>_ventilateur_auxiliaire
+                  state_not: unavailable
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                  state_not: unknown
+              card:
+                type: custom:mushroom-fan-card
+                entity: fan.<BAMBULABPRINTER_ID>_ventilateur_auxiliaire
+                layout: horizontal
+                fill_container: true
+                name: Ventilateur auxiliaire
+                icon_animation: true
+                collapsible_controls: true
+                show_percentage_control: true
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: fan.<BAMBULABPRINTER_ID>_ventilateur_de_la_chambre
+                  state_not: unavailable
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                  state_not: unknown
+              card:
+                type: custom:mushroom-fan-card
+                entity: fan.<BAMBULABPRINTER_ID>_ventilateur_de_la_chambre
+                layout: horizontal
+                fill_container: true
+                name: Ventilateur de la chambre
+                icon_animation: true
+                collapsible_controls: true
+                show_percentage_control: true
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: fan.<BAMBULABPRINTER_ID>_ventilateur_de_refroidissement
+                  state_not: unavailable
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                  state_not: unknown
+              card:
+                type: custom:mushroom-fan-card
+                entity: fan.<BAMBULABPRINTER_ID>_ventilateur_de_refroidissement
+                layout: horizontal
+                fill_container: true
+                name: Ventilateur de refroidissement
+                icon_animation: true
+                collapsible_controls: true
+                show_percentage_control: true
+    title: Contrôle
+  - type: grid
+    cards:
+      - type: custom:mushroom-title-card
+        title: Fichier
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: binary_sensor.<BAMBULABPRINTER_ID>_etat
+                state_not: "on"
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: vertical-stack
+          cards:
+            - type: conditional
+              conditions:
+                - condition: or
+                  conditions:
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_nom_de_la_tache
+                      state: unavailable
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_nom_de_la_tache
+                      state: unknown
+              card:
+                type: custom:mushroom-template-card
+                primary: Aucun travail en cours
+                secondary: ""
+                icon: mdi:file-clock-outline
+                layout: horizontal
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_nom_de_la_tache
+                  state_not: unavailable
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_nom_de_la_tache
+                  state_not: unknown
+              card:
+                type: custom:mushroom-entity-card
+                entity: sensor.<BAMBULABPRINTER_ID>_nom_de_la_tache
+                icon: mdi:file-clock-outline
+                name: Tâche
+                layout: horizontal
+            - type: horizontal-stack
+              cards:
+                - type: custom:mushroom-entity-card
+                  entity: sensor.<BAMBULABPRINTER_ID>_temps_restant
+                  name: Durée d'impression
+                - type: custom:mushroom-entity-card
+                  entity: sensor.<BAMBULABPRINTER_ID>_grammage_de_limpression
+                  name: Poids de l'impression
+            - type: horizontal-stack
+              cards:
+                - show_state: false
+                  show_name: false
+                  camera_view: live
+                  type: picture-entity
+                  camera_image: <CAM_ID>
+                  entity: <CAM_ID>
+                  theme: Mushroom Square
+                  name: BambuLab X1C Alpha
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 8em !important;
+                        overflow: hidden;
+                      }
+                - type: picture
+                  image_entity: image.<BAMBULABPRINTER_ID>_image_de_couverture
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 8em !important;
+                        overflow: hidden;
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        img {
+                          margin: auto;
+                          display: block;
+                          position: absolute;
+                        }
+                      }
+      - type: custom:mushroom-title-card
+        title: Processus
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: binary_sensor.<BAMBULABPRINTER_ID>_etat
+                state_not: "on"
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: custom:mushroom-entity-card
+                  entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                  name: État de l'impression
+                  icon: mdi:format-list-checks
+                - type: custom:mushroom-template-card
+                  primary: Couches
+                  icon_color: var(--rgb-state-entity)
+                  secondary: >-
+                    {{states('sensor.<BAMBULABPRINTER_ID>_couche_actuelle')}} /
+                    {{states('sensor.<BAMBULABPRINTER_ID>_nombre_total_de_couches')}}
+                  icon: mdi:layers
+            - type: horizontal-stack
+              cards:
+                - type: conditional
+                  conditions:
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_heure_de_debut
+                      state_not: unavailable
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_heure_de_debut
+                      state_not: unknown
+                  card:
+                    type: custom:mushroom-entity-card
+                    entity: sensor.<BAMBULABPRINTER_ID>_heure_de_debut
+                    name: Heure de début
+                    icon: mdi:clock-start
+                - type: conditional
+                  conditions:
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_heure_de_fin
+                      state_not: unavailable
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_heure_de_fin
+                      state_not: unknown
+                  card:
+                    type: custom:mushroom-entity-card
+                    entity: sensor.<BAMBULABPRINTER_ID>_heure_de_fin
+                    name: Heure de fin
+                    icon: mdi:timer-check-outline
+            - type: gauge
+              entity: sensor.<BAMBULABPRINTER_ID>_progression_de_l_impression
+              name: Progression de l'impression
+      - type: custom:mushroom-title-card
+        title: Maintenance
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: custom:mushroom-template-card
+        primary: Tiges en carbone de l'axe X
+        secondary: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') | float) > 50 %}
+          NETTOYAGE NÉCESSAIRE
+
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') }}h depuis le dernier nettoyage
+
+          {% endif %}Réinitialiser le minuteur
+        icon: mdi:wrench-clock
+        icon_color: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') | float) > 50 %}
+          red
+          {% else %}
+          green
+          {% endif %}
+        multiline_secondary: true
+        badge_icon: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') | float) > 50 %}
+          mdi:alert-circle-outline
+          {% endif %}
+        badge_color: blue
+        layout: horizontal
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+        tap_action:
+          action: call-service
+          service: counter.reset
+          target:
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+          data: {}
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+      - type: custom:mushroom-template-card
+        primary: Tiges linéaires et courroie des axes Y et Z
+        secondary: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') | float) > 50 %}
+          NETTOYAGE NÉCESSAIRE
+
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') }}h depuis le dernier nettoyage
+
+          {% endif %}Réinitialiser le minuteur
+        icon: mdi:wrench-clock
+        icon_color: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') | float) > 50 %}
+          red
+          {% else %}
+          green
+          {% endif %}
+        multiline_secondary: true
+        badge_icon: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') | float) > 50 %}
+          mdi:alert-circle-outline
+          {% endif %}
+        badge_color: blue
+        layout: horizontal
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
+        tap_action:
+          action: call-service
+          service: counter.reset
+          target:
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
+          data: {}
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+      - type: custom:mushroom-template-card
+        primary: Lubrifier les broches Z
+        secondary: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') | float) > 50 %}
+          NETTOYAGE NÉCESSAIRE
+
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') }}h depuis le dernier nettoyage
+
+          {% endif %}Réinitialiser le minuteur
+        icon: mdi:wrench-clock
+        icon_color: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') | float) > 50 %}
+          red
+          {% else %}
+          green
+          {% endif %}
+        multiline_secondary: true
+        badge_icon: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') | float) > 50 %}
+          mdi:alert-circle-outline
+          {% endif %}
+        badge_color: blue
+        layout: horizontal
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
+        tap_action:
+          action: call-service
+          service: counter.reset
+          target:
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
+          data: {}
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+      - type: custom:mushroom-template-card
+        primary: Nettoyer l'imprimante
+        secondary: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') | float) > 50 %}
+          NETTOYAGE NÉCESSAIRE
+
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') }}h depuis le dernier nettoyage
+
+          {% endif %}Réinitialiser le minuteur
+        icon: mdi:wrench-clock
+        icon_color: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') | float) > 50 %}
+          red
+          {% else %}
+          green
+          {% endif %}
+        multiline_secondary: true
+        badge_icon: >-
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') | float) > 50 %}
+          mdi:alert-circle-outline
+          {% endif %}
+        badge_color: blue
+        layout: horizontal
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+        tap_action:
+          action: call-service
+          service: counter.reset
+          target:
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+          data: {}
+        hold_action:
+          action: none
+        double_tap_action:
+          action: none
+    title: Travail
+  - type: grid
+    cards:
+      - type: custom:mushroom-title-card
+        title: Bambu X1C
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: vertical-stack
+        cards:
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state_not: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state_not: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state_not: unknown
+              - condition: state
+                entity: binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms
+                state: "on"
+            card:
+              type: custom:mushroom-template-card
+              primary: >-
+                {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error') %}
+                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
+                {% if alertLevel == '0002' %}
+                Avertissement
+                {% elif alertLevel == '0003' %}
+                Information
+                {% else %}
+                Erreur détectée !
+                {% endif %}
+              secondary: >-
+                {{
+                state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error')
+                }}
+                {{
+                state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Wiki')
+                }}
+              icon: >-
+                {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error') %}
+                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
+                {% if alertLevel == '0002' %}
+                mdi:alert-circle
+                {% elif alertLevel == '0003' %}
+                mdi:information
+                {% else %}
+                mdi:alert
+                {% endif %}
+              layout: horizontal
+              tap_action:
+                action: none
+              hold_action:
+                action: none
+              double_tap_action:
+                action: none
+              entity: binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms
+              icon_color: white
+              multiline_secondary: true
+              card_mod:
+                style: |
+                  ha-card {
+                    {% set errorMessage = {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error') %}
+                    {% set alertLevel = errorMessage[14:] %}
+                    {% set alertLevel = alertLevel[:4] %}
+                    {% if alertLevel == '0002' %}
+                    background-color: rgba(255,152,0,0.5);
+                    {% elif alertLevel == '0003' %}
+                    background-color: rgba(33, 150, 243,0.5);
+                    {% else %}
+                    background-color: #770000;
+                    {% endif %}
+                  }
+          - type: custom:stack-in-card
+            mode: vertical
+            cards:
+              - type: conditional
+                conditions:
+                  - condition: or
+                    conditions:
+                      - condition: state
+                        entity: <POWER_SWITCH_ID>
+                        state_not: "on"
+                      - condition: state
+                        entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                        state: offline
+                      - condition: state
+                        entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                        state: unavailable
+                      - condition: state
+                        entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                        state: unknown
+                card:
+                  type: picture-elements
+                  elements: []
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: none !important;
+                        border: none !important; 
+                        box-shadow: none !important;
+                        padding: 60px
+                      }
+                  image: /local/media/printerpage/printer_bambulab_x1c_offline.png
+              - type: conditional
+                conditions:
+                  - condition: state
+                    entity: <POWER_SWITCH_ID>
+                    state: "on"
+                  - condition: state
+                    entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                    state_not: offline
+                  - condition: state
+                    entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                    state_not: unavailable
+                  - condition: state
+                    entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                    state_not: unknown
+                card:
+                  type: picture-elements
+                  elements:
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                          state_not: unavailable
+                      elements:
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              below: 1
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              title: Ventilateur auxiliaire
+                              style:
+                                top: "-6%"
+                                left: 14%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_off.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              above: 0
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              title: Ventilateur auxiliaire
+                              style:
+                                top: "-6%"
+                                left: 14%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_on.png
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                          state_not: unavailable
+                      elements:
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              below: 1
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              title: Ventilateur de refroidissement
+                              style:
+                                top: "-6%"
+                                left: 45%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_off.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              above: 0
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              title: Ventilateur de refroidissement
+                              style:
+                                top: "-6%"
+                                left: 45%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_on.png
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                          state_not: unavailable
+                      elements:
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              below: 1
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              title: Ventilateur de la chambre
+                              style:
+                                top: 106%
+                                left: 17%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_off.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              above: 0
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              title: Ventilateur de la chambre
+                              style:
+                                top: 106%
+                                left: 17%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_on.png
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_buse
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_buse
+                          type: state-badge
+                          title: Température de la buse
+                          style:
+                            top: 45%
+                            left: 100%
+                            font-size: 0.8em
+                            color: rgba(0,0,0,0)
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_du_lit
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_du_lit
+                          type: state-badge
+                          title: Température du lit
+                          style:
+                            top: 0%
+                            left: 30%
+                            font-size: 0.8em
+                            color: rgba(0,0,0,0)
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_chambre
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_chambre
+                          type: state-badge
+                          title: Température de la chambre
+                          style:
+                            font-size: 0.8em
+                            top: 117%
+                            left: 40%
+                            color: rgba(0,0,0,0)
+                  card_mod:
+                    style: |
+                      ha-card {
+                        background: none !important;
+                        border: none !important; 
+                        box-shadow: none !important;
+                        padding: 60px
+                      }
+                  image: /local/media/printerpage/printer_bambulab_x1c_online.png
+      - type: custom:mushroom-title-card
+        title: AMS
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: custom:stack-in-card
+        mode: vertical
+        cards:
+          - type: conditional
+            conditions:
+              - condition: or
+                conditions:
+                  - condition: state
+                    entity: <POWER_SWITCH_ID>
+                    state_not: "on"
+                  - condition: state
+                    entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                    state: offline
+                  - condition: state
+                    entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                    state: unavailable
+                  - condition: state
+                    entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                    state: unknown
+            card:
+              type: picture-elements
+              elements: []
+              card_mod:
+                style: |
+                  ha-card {
+                    background: none !important;
+                    border: none !important; 
+                    box-shadow: none !important;
+                    padding: 60px
+                  }
+              image: /local/media/printerpage/printer_bambulab_ams_offline.png
+          - type: conditional
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state_not: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state_not: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state_not: unknown
+            card:
+              type: picture-elements
+              variables:
+                current_active_slot: /local/media/printerpage/printer_bambulab_ams_online.png
+              elements:
+                - type: conditional
+                  conditions:
+                    - entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                      state_not: offline
+                  elements:
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                          state_not: unavailable
+                      elements:
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              below: 1
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              title: Index d'humidité
+                              style:
+                                top: 13%
+                                left: 3%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_humidity_none.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              above: 0
+                              below: 2
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              title: Index d'humidité
+                              style:
+                                top: 13%
+                                left: 3%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_humidity_1.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              above: 1
+                              below: 3
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              title: Index d'humidité
+                              style:
+                                top: 13%
+                                left: 3%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_humidity_2.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              above: 2
+                              below: 4
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              title: Index d'humidité
+                              style:
+                                top: 13%
+                                left: 3%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_humidity_3.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              above: 3
+                              below: 5
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              title: Index d'humidité
+                              style:
+                                top: 13%
+                                left: 3%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_humidity_4.png
+                        - type: conditional
+                          conditions:
+                            - condition: numeric_state
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              above: 4
+                          elements:
+                            - type: image
+                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              title: Index d'humidité
+                              style:
+                                top: 13%
+                                left: 3%
+                                font-size: 0.8em
+                                color: rgba(0,0,0,0)
+                              image: /local/media/printerpage/extra_element_humidity_5.png
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_temperature_de_la_ams
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_temperature_de_la_ams
+                          type: state-badge
+                          title: Température de l'AMS
+                          style:
+                            top: 100%
+                            left: 100%
+                            font-size: 0.8em
+                            color: rgba(0,0,0,0)
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_1
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_1
+                          type: state-label
+                          title: Emplacement 1
+                          attribute: type
+                          style:
+                            top: "-7%"
+                            left: 23%
+                            width: var(--ha-label-badge-size,3em)
+                            height: var(--ha-label-badge-size,3em)
+                            overflow: hidden
+                            line-height: 2.1em
+                            text-align: center
+                            border: var(--slotactive1Border)
+                            border-radius: 50%
+                            background-color: var(--slotcolor1)
+                            text-shadow: "1px 1px 1px #000, 1px 1px 1px #000"
+                            display: flex
+                            justify-content: center
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_2
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_2
+                          type: state-label
+                          title: Emplacement 2
+                          attribute: type
+                          style:
+                            top: "-2%"
+                            left: 37%
+                            width: var(--ha-label-badge-size,3em)
+                            height: var(--ha-label-badge-size,3em)
+                            overflow: hidden
+                            line-height: 2.1em
+                            text-align: center
+                            border: var(--slotactive2Border)
+                            border-radius: 50%
+                            background-color: var(--slotcolor2)
+                            text-shadow: "1px 1px 1px #000, 1px 1px 1px #000"
+                            display: flex
+                            justify-content: center
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_3
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_3
+                          type: state-label
+                          title: Emplacement 3
+                          attribute: type
+                          style:
+                            top: 3%
+                            left: 51%
+                            width: var(--ha-label-badge-size,3em)
+                            height: var(--ha-label-badge-size,3em)
+                            overflow: hidden
+                            line-height: 2.1em
+                            text-align: center
+                            border: var(--slotactive3Border)
+                            border-radius: 50%
+                            background-color: var(--slotcolor3)
+                            text-shadow: "1px 1px 1px #000, 1px 1px 1px #000"
+                            display: flex
+                            justify-content: center
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_4
+                          state_not: unavailable
+                      elements:
+                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_4
+                          type: state-label
+                          title: Emplacement 4
+                          attribute: type
+                          style:
+                            top: 9%
+                            left: 66%
+                            width: var(--ha-label-badge-size,3em)
+                            height: var(--ha-label-badge-size,3em)
+                            overflow: hidden
+                            line-height: 2.1em
+                            text-align: center
+                            border: var(--slotactive4Border)
+                            border-radius: 50%
+                            mix-blend-mode: difference
+                            background-color: var(--slotcolor4)
+                            text-shadow: "1px 1px 1px #000, 1px 1px 1px #000"
+                            display: flex
+                            justify-content: center
+              card_mod:
+                style: |
+                  ha-card {
+                    background-size: contain !important;
+                    background-repeat: no-repeat !important;
+                    background-origin: content-box !important;
+                    border: none !important; 
+                    box-shadow: none !important;
+                    padding: 60px;          
+                    --slotcolor1: {{ state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_1', 'color') }};
+                    --slotcolor2: {{ state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_2', 'color') }};
+                    --slotcolor3: {{ state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_3', 'color') }};
+                    --slotcolor4: {{ state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_4', 'color') }};
+                    {%- set activeSlotSensor1 = state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_1', 'active') %}
+                    {%- set activeSlotSensor2 = state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_2', 'active') %}
+                    {%- set activeSlotSensor3 = state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_3', 'active') %}
+                    {%- set activeSlotSensor4 = state_attr('sensor.<BAMBULABPRINTER_AMS_ID>_emplacement_4', 'active') %}
+                    {%- if activeSlotSensor1 == true %}
+                    --slotactive1Border: .3em solid #11739D;
+                    {%- else %}
+                    --slotactive1Border: .1em solid #aaaaaa;
+                    {%- endif %}
+                    {%- if activeSlotSensor2 == true %}
+                    --slotactive2Border: .3em solid #11739D;
+                    {%- else %}
+                    --slotactive2Border: .1em solid #aaaaaa;
+                    {%- endif %}
+                    {%- if activeSlotSensor3 == true %}
+                    --slotactive3Border: .3em solid #11739D;
+                    {%- else %}
+                    --slotactive3Border: .1em solid #aaaaaa;
+                    {%- endif %}
+                    {%- if activeSlotSensor4 == true %}
+                    --slotactive4Border: .3em solid #11739D;
+                    {%- else %}
+                    --slotactive4Border: .1em solid #aaaaaa;
+                    {%- endif %}
+                    {%- if activeSlotSensor1 == true %}
+                    background-image: url(/local/media/printerpage/printer_bambulab_ams_online_activeslot1.png) !important;
+                    {%- elif activeSlotSensor2 == true %}
+                    background-image: url(/local/media/printerpage/printer_bambulab_ams_online_activeslot2.png) !important;
+                    {%- elif activeSlotSensor3 == true %}
+                    background-image: url(/local/media/printerpage/printer_bambulab_ams_online_activeslot3.png) !important;
+                    {%- elif activeSlotSensor4 == true %}
+                    background-image: url(/local/media/printerpage/printer_bambulab_ams_online_activeslot4.png) !important;
+                    {%- else %}
+                    background-image: url(/local/media/printerpage/printer_bambulab_ams_online.png) !important;
+                    {%- endif %}
+                  }
+              image: /local/media/printerpage/printer_bambulab_ams_spacer.png
+      - type: custom:mushroom-title-card
+        title: Bobine externe
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: binary_sensor.<BAMBULABPRINTER_ID>_etat
+                state_not: "on"
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: vertical-stack
+          cards:
+            - type: conditional
+              conditions:
+                - condition: or
+                  conditions:
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_externalspool_bobine_externe
+                      state: unavailable
+                    - condition: state
+                      entity: sensor.<BAMBULABPRINTER_ID>_externalspool_bobine_externe
+                      state: unknown
+              card:
+                type: custom:mushroom-template-card
+                primary: Bobine externe non disponible
+                secondary: ""
+                icon: ""
+                layout: horizontal
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                double_tap_action:
+                  action: none
+            - type: conditional
+              conditions:
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_externalspool_bobine_externe
+                  state_not: unavailable
+                - condition: state
+                  entity: sensor.<BAMBULABPRINTER_ID>_externalspool_bobine_externe
+                  state_not: unknown
+              card:
+                type: picture-elements
+                elements:
+                  - entity: sensor.<BAMBULABPRINTER_ID>_externalspool_bobine_externe
+                    type: state-label
+                    title: Bobine externe
+                    attribute: type
+                    style:
+                      top: "0"
+                      left: 26%
+                      width: var(--ha-label-badge-size,3em)
+                      height: var(--ha-label-badge-size,3em)
+                      overflow: hidden
+                      line-height: 2.1em
+                      text-align: center
+                      border: .3em solid
+                      border-color: "#11739D"
+                      border-radius: 50%
+                      background-color: var(--slotcolor)
+                      text-shadow: "1px 1px 1px #000, 1px 1px 1px #000"
+                      display: flex
+                      justify-content: center
+                card_mod:
+                  style: |
+                    ha-card {
+                      padding-left: 5em;
+                      padding-right: 5em;
+                      padding-top: 5em;
+                      padding-bottom: 1em;
+                      --slotcolor: {{ state_attr('sensor.<BAMBULABPRINTER_ID>_externalspool_bobine_externe', 'color') }};
+                    }
+                image: /local/media/printerpage/printer_external_spool.png
+    title: Statut
+  - type: grid
+    cards:
+      - type: custom:mushroom-title-card
+        title: Buse
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: entities
+          entities:
+            - entity: sensor.<BAMBULABPRINTER_ID>_nozzle_type
+              name: Type
+              icon: mdi:printer-3d-nozzle-outline
+            - entity: sensor.<BAMBULABPRINTER_ID>_nozzle_size
+              name: Taille
+              icon: mdi:printer-3d-nozzle-alert-outline
+            - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_buse
+              name: Température actuelle
+              icon: mdi:printer-3d-nozzle-heat-outline
+            - entity: sensor.<BAMBULABPRINTER_ID>_temperature_cible_de_la_buse
+              name: Température cible
+              icon: mdi:printer-3d-nozzle-heat
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unknown
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: custom:mushroom-title-card
+        title: Lit
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: entities
+          entities:
+            - entity: sensor.<BAMBULABPRINTER_ID>_type_de_lit_dimpression
+              icon: mdi:bed-outline
+              name: Type
+            - entity: sensor.<BAMBULABPRINTER_ID>_temperature_du_lit
+              name: Température actuelle
+            - entity: sensor.<BAMBULABPRINTER_ID>_temperature_cible_du_lit
+              name: Température cible
+              icon: cil:thermometer-full
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unknown
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: custom:mushroom-title-card
+        title: Diagnostic
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: conditional
+        conditions:
+          - condition: state
+            entity: <POWER_SWITCH_ID>
+            state: "on"
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: offline
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unavailable
+          - condition: state
+            entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+            state_not: unknown
+        card:
+          type: entities
+          entities:
+            - entity: binary_sensor.<BAMBULABPRINTER_ID>_enclosure_door
+              name: Porte
+            - entity: binary_sensor.<BAMBULABPRINTER_ID>_mise_a_jour_du_micrologiciel
+              name: Firmware
+              icon: ""
+            - entity: binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms
+              name: Erreurs
+              icon: mdi:alert-circle-check-outline
+            - entity: sensor.<BAMBULABPRINTER_ID>_utilisation_totale
+              name: Utilisation totale
+            - entity: binary_sensor.<BAMBULABPRINTER_ID>_etat
+              name: Connexion MakerWorld
+              icon: mdi:cast-connected
+            - entity: sensor.<BAMBULABPRINTER_ID>_signal_wi_fi
+              name: Signal Wi-Fi
+      - type: conditional
+        conditions:
+          - condition: or
+            conditions:
+              - condition: state
+                entity: <POWER_SWITCH_ID>
+                state_not: "on"
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: offline
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unavailable
+              - condition: state
+                entity: sensor.<BAMBULABPRINTER_ID>_etat_de_l_impression
+                state: unknown
+        card:
+          type: custom:mushroom-template-card
+          primary: L'imprimante est éteinte
+          secondary: ""
+          icon: ""
+          layout: horizontal
+          tap_action:
+            action: none
+          hold_action:
+            action: none
+          double_tap_action:
+            action: none
+      - type: custom:mushroom-title-card
+        title: Énergie
+        title_tap_action:
+          action: none
+        subtitle_tap_action:
+          action: none
+        card_mod:
+          style: |
+            ha-card {
+              h1.title {
+                font-size: medium;
+                font-weight: normal;
+              }
+            }
+      - type: vertical-stack
+        cards:
+          - graph: line
+            type: sensor
+            detail: 1
+            entity: <POWER_POWERMETER_ID>
+            name: Consommation
+            icon: mdi:power-socket
+            unit: W
+            theme: Mushroom
+          - type: entities
+            entities:
+              - entity: <POWER_VOLTAGEMETER_ID>
+                name: Tension
+              - entity: <POWER_CURRENTMETER_ID>
+                name: Courant
+              - entity: <POWER_DAYENERGYMETER_ID>
+                name: Consommation quotidienne
+                icon: mdi:meter-electric-outline
+              - entity: <POWER_TOTALENERGYMETER_ID>
+                name: Consommation totale
+                icon: mdi:meter-electric-outline
+    title: Capteurs
+icon: mdi:printer-3d
+theme: Google Dark Theme
