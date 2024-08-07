@@ -1517,7 +1517,7 @@ sections:
               name: Température actuelle
             - entity: sensor.<BAMBULABPRINTER_ID>_temperature_cible_du_lit
               name: Température cible
-              icon: cil:thermometer-full
+              icon: mdi:thermometer-high
       - type: conditional
         conditions:
           - condition: or
