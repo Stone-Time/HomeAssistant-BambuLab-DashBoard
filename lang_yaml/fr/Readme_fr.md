@@ -101,7 +101,7 @@ description: ""
 trigger:
   - platform: state
     entity_id:
-      - sensor.<BAMBULABPRINTER_ID>_gesamtnutzung
+      - sensor.<BAMBULABPRINTER_ID>_utilisation_totale
     alias: printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_count
 condition:
   - condition: template
