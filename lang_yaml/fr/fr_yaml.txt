@@ -543,32 +543,32 @@ sections:
       - type: custom:mushroom-template-card
         primary: Tiges en carbone de l'axe X
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') | float) > 50 %}
           NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') }}h depuis le dernier nettoyage
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') | float) > 50 %}
           red
           {% else %}
           green
           {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') | float) > 50 %}
           mdi:alert-circle-outline
           {% endif %}
         badge_color: blue
         layout: horizontal
-        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone
         tap_action:
           action: call-service
           service: counter.reset
           target:
-            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone
           data: {}
         hold_action:
           action: none
@@ -577,32 +577,32 @@ sections:
       - type: custom:mushroom-template-card
         primary: Tiges linéaires et courroie des axes Y et Z
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') | float) > 50 %}
           NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') }}h depuis le dernier nettoyage
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') | float) > 50 %}
           red
           {% else %}
           green
           {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') | float) > 50 %}
           mdi:alert-circle-outline
           {% endif %}
         badge_color: blue
         layout: horizontal
-        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz
         tap_action:
           action: call-service
           service: counter.reset
           target:
-            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_yzrods
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz
           data: {}
         hold_action:
           action: none
@@ -611,32 +611,32 @@ sections:
       - type: custom:mushroom-template-card
         primary: Lubrifier les broches Z
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') | float) > 50 %}
           NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') }}h depuis le dernier nettoyage
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') | float) > 50 %}
           red
           {% else %}
           green
           {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') | float) > 50 %}
           mdi:alert-circle-outline
           {% endif %}
         badge_color: blue
         layout: horizontal
-        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z
         tap_action:
           action: call-service
           service: counter.reset
           target:
-            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_zspindle
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z
           data: {}
         hold_action:
           action: none
@@ -645,32 +645,32 @@ sections:
       - type: custom:mushroom-template-card
         primary: Nettoyer l'imprimante
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') | float) > 50 %}
           NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') }}h depuis le dernier nettoyage
+          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') | float) > 50 %}
           red
           {% else %}
           green
           {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice') | float) > 50 %}
+          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') | float) > 50 %}
           mdi:alert-circle-outline
           {% endif %}
         badge_color: blue
         layout: horizontal
-        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal
         tap_action:
           action: call-service
           service: counter.reset
           target:
-            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal
           data: {}
         hold_action:
           action: none
