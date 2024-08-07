@@ -153,6 +153,7 @@ sections:
                 double_tap_action:
                   action: none
                 layout: horizontal
+                secondary_info: none
             - type: conditional
               conditions:
                 - condition: or
@@ -172,6 +173,7 @@ sections:
                   action: none
                 layout: horizontal
                 entity: button.<BAMBULABPRINTER_ID>_arreter_l_impression
+                secondary_info: none
             - type: conditional
               conditions:
                 - condition: state
@@ -186,6 +188,7 @@ sections:
                   action: none
                 layout: horizontal
                 entity: button.<BAMBULABPRINTER_ID>_reprendre_l_impression
+                secondary_info: none
       - type: custom:mushroom-title-card
         title: Ventilateurs
         title_tap_action:
@@ -251,7 +254,8 @@ sections:
                   entity: fan.<BAMBULABPRINTER_ID>_ventilateur_auxiliaire
                   state_not: unavailable
                 - condition: state
-                  entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                  entity: >-
+                    sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
                   state_not: unknown
               card:
                 type: custom:mushroom-fan-card
@@ -268,7 +272,8 @@ sections:
                   entity: fan.<BAMBULABPRINTER_ID>_ventilateur_de_la_chambre
                   state_not: unavailable
                 - condition: state
-                  entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                  entity: >-
+                    sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
                   state_not: unknown
               card:
                 type: custom:mushroom-fan-card
@@ -285,7 +290,8 @@ sections:
                   entity: fan.<BAMBULABPRINTER_ID>_ventilateur_de_refroidissement
                   state_not: unavailable
                 - condition: state
-                  entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                  entity: >-
+                    sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
                   state_not: unknown
               card:
                 type: custom:mushroom-fan-card
@@ -543,32 +549,35 @@ sections:
       - type: custom:mushroom-template-card
         primary: Tiges en carbone de l'axe X
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') | float) > 50 %}
-          NETTOYAGE NÉCESSAIRE
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone')
+          | float) > 50 %} NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') }}h depuis le dernier nettoyage
+          {% else %}{{
+          states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone')
+          }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') | float) > 50 %}
-          red
-          {% else %}
-          green
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone')
+          | float) > 50 %} red {% else %} green {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone') | float) > 50 %}
-          mdi:alert-circle-outline
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone')
+          | float) > 50 %} mdi:alert-circle-outline {% endif %}
         badge_color: blue
         layout: horizontal
-        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone
+        entity: >-
+          counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone
         tap_action:
           action: call-service
           service: counter.reset
           target:
-            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone
+            entity_id: >-
+              counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_carbone
           data: {}
         hold_action:
           action: none
@@ -577,24 +586,25 @@ sections:
       - type: custom:mushroom-template-card
         primary: Tiges linéaires et courroie des axes Y et Z
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') | float) > 50 %}
-          NETTOYAGE NÉCESSAIRE
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz')
+          | float) > 50 %} NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') }}h depuis le dernier nettoyage
+          {% else %}{{
+          states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz')
+          }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') | float) > 50 %}
-          red
-          {% else %}
-          green
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz')
+          | float) > 50 %} red {% else %} green {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz') | float) > 50 %}
-          mdi:alert-circle-outline
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz')
+          | float) > 50 %} mdi:alert-circle-outline {% endif %}
         badge_color: blue
         layout: horizontal
         entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_tiges_yz
@@ -611,24 +621,25 @@ sections:
       - type: custom:mushroom-template-card
         primary: Lubrifier les broches Z
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') | float) > 50 %}
-          NETTOYAGE NÉCESSAIRE
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z')
+          | float) > 50 %} NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') }}h depuis le dernier nettoyage
+          {% else %}{{
+          states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z')
+          }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') | float) > 50 %}
-          red
-          {% else %}
-          green
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z')
+          | float) > 50 %} red {% else %} green {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z') | float) > 50 %}
-          mdi:alert-circle-outline
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z')
+          | float) > 50 %} mdi:alert-circle-outline {% endif %}
         badge_color: blue
         layout: horizontal
         entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_vis_z
@@ -645,32 +656,35 @@ sections:
       - type: custom:mushroom-template-card
         primary: Nettoyer l'imprimante
         secondary: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') | float) > 50 %}
-          NETTOYAGE NÉCESSAIRE
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal')
+          | float) > 50 %} NETTOYAGE NÉCESSAIRE
 
-          {% else %}{{ states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') }}h depuis le dernier nettoyage
+          {% else %}{{
+          states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal')
+          }}h depuis le dernier nettoyage
 
           {% endif %}Réinitialiser le minuteur
         icon: mdi:wrench-clock
         icon_color: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') | float) > 50 %}
-          red
-          {% else %}
-          green
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal')
+          | float) > 50 %} red {% else %} green {% endif %}
         multiline_secondary: true
         badge_icon: >-
-          {% if (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal') | float) > 50 %}
-          mdi:alert-circle-outline
-          {% endif %}
+          {% if
+          (states('counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal')
+          | float) > 50 %} mdi:alert-circle-outline {% endif %}
         badge_color: blue
         layout: horizontal
-        entity: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal
+        entity: >-
+          counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal
         tap_action:
           action: call-service
           service: counter.reset
           target:
-            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal
+            entity_id: >-
+              counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_appareil_principal
           data: {}
         hold_action:
           action: none
@@ -715,32 +729,25 @@ sections:
             card:
               type: custom:mushroom-template-card
               primary: >-
-                {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error') %}
-                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
-                {% if alertLevel == '0002' %}
-                Avertissement
-                {% elif alertLevel == '0003' %}
-                Information
-                {% else %}
-                Erreur détectée !
-                {% endif %}
+                {% set errorMessage =
+                state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error')
+                %} {% set alertLevel = errorMessage[14:] %} {% set alertLevel =
+                alertLevel[:4] %} {% if alertLevel == '0002' %} Avertissement {%
+                elif alertLevel == '0003' %} Information {% else %} Erreur
+                détectée ! {% endif %}
               secondary: >-
                 {{
                 state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error')
-                }}
-                {{
+                }} {{
                 state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Wiki')
                 }}
               icon: >-
-                {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error') %}
-                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
-                {% if alertLevel == '0002' %}
-                mdi:alert-circle
-                {% elif alertLevel == '0003' %}
-                mdi:information
-                {% else %}
-                mdi:alert
-                {% endif %}
+                {% set errorMessage =
+                state_attr('binary_sensor.<BAMBULABPRINTER_ID>_erreurs_hms','1-Error')
+                %} {% set alertLevel = errorMessage[14:] %} {% set alertLevel =
+                alertLevel[:4] %} {% if alertLevel == '0002' %} mdi:alert-circle
+                {% elif alertLevel == '0003' %} mdi:information {% else %}
+                mdi:alert {% endif %}
               layout: horizontal
               tap_action:
                 action: none
@@ -815,17 +822,20 @@ sections:
                   elements:
                     - type: conditional
                       conditions:
-                        - entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
                           state_not: unavailable
                       elements:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
                               below: 1
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
                               title: Ventilateur auxiliaire
                               style:
                                 top: "-6%"
@@ -836,11 +846,13 @@ sections:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
                               above: 0
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_auxiliaire
                               title: Ventilateur auxiliaire
                               style:
                                 top: "-6%"
@@ -850,17 +862,20 @@ sections:
                               image: /local/media/printerpage/extra_element_on.png
                     - type: conditional
                       conditions:
-                        - entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
                           state_not: unavailable
                       elements:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
                               below: 1
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
                               title: Ventilateur de refroidissement
                               style:
                                 top: "-6%"
@@ -871,11 +886,13 @@ sections:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
                               above: 0
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_refroidissement
                               title: Ventilateur de refroidissement
                               style:
                                 top: "-6%"
@@ -885,17 +902,20 @@ sections:
                               image: /local/media/printerpage/extra_element_on.png
                     - type: conditional
                       conditions:
-                        - entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
                           state_not: unavailable
                       elements:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
                               below: 1
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
                               title: Ventilateur de la chambre
                               style:
                                 top: 106%
@@ -906,11 +926,13 @@ sections:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
                               above: 0
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_ID>_vitesse_du_ventilateur_de_la_chambre
                               title: Ventilateur de la chambre
                               style:
                                 top: 106%
@@ -946,10 +968,12 @@ sections:
                             color: rgba(0,0,0,0)
                     - type: conditional
                       conditions:
-                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_chambre
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_ID>_temperature_de_la_chambre
                           state_not: unavailable
                       elements:
-                        - entity: sensor.<BAMBULABPRINTER_ID>_temperature_de_la_chambre
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_ID>_temperature_de_la_chambre
                           type: state-badge
                           title: Température de la chambre
                           style:
@@ -1043,103 +1067,123 @@ sections:
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               below: 1
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               title: Index d'humidité
                               style:
                                 top: 13%
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: /local/media/printerpage/extra_element_humidity_none.png
+                              image: >-
+                                /local/media/printerpage/extra_element_humidity_none.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               above: 0
                               below: 2
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               title: Index d'humidité
                               style:
                                 top: 13%
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: /local/media/printerpage/extra_element_humidity_1.png
+                              image: >-
+                                /local/media/printerpage/extra_element_humidity_1.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               above: 1
                               below: 3
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               title: Index d'humidité
                               style:
                                 top: 13%
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: /local/media/printerpage/extra_element_humidity_2.png
+                              image: >-
+                                /local/media/printerpage/extra_element_humidity_2.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               above: 2
                               below: 4
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               title: Index d'humidité
                               style:
                                 top: 13%
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: /local/media/printerpage/extra_element_humidity_3.png
+                              image: >-
+                                /local/media/printerpage/extra_element_humidity_3.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               above: 3
                               below: 5
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               title: Index d'humidité
                               style:
                                 top: 13%
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: /local/media/printerpage/extra_element_humidity_4.png
+                              image: >-
+                                /local/media/printerpage/extra_element_humidity_4.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               above: 4
                           elements:
                             - type: image
-                              entity: sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
+                              entity: >-
+                                sensor.<BAMBULABPRINTER_AMS_ID>_indice_d_humidite
                               title: Index d'humidité
                               style:
                                 top: 13%
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: /local/media/printerpage/extra_element_humidity_5.png
+                              image: >-
+                                /local/media/printerpage/extra_element_humidity_5.png
                     - type: conditional
                       conditions:
-                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_temperature_de_la_ams
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_AMS_ID>_temperature_de_la_ams
                           state_not: unavailable
                       elements:
-                        - entity: sensor.<BAMBULABPRINTER_AMS_ID>_temperature_de_la_ams
+                        - entity: >-
+                            sensor.<BAMBULABPRINTER_AMS_ID>_temperature_de_la_ams
                           type: state-badge
                           title: Température de l'AMS
                           style:
