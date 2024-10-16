@@ -1,6 +1,7 @@
 ![Preview](https://github.com/Stone-Time/HomeAssistant-BambuLab-DashBoard/blob/main/screenshot.jpg?raw=true)
 
 
+Die Grundidee kam durch den Nutzer Mattia Confalonieri (https://www.instagram.com/mattia.confalonieri?igsh=Zmc5ZHkwY2k4NTh3)
 
 # 1. Erforderliche HACs Komponenten
 - Mushroom
