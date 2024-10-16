@@ -18,7 +18,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: custom:mushroom-entity-card
@@ -61,7 +60,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -200,7 +198,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -314,7 +311,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -445,7 +441,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -543,7 +538,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: custom:mushroom-template-card
@@ -587,8 +581,7 @@ sections:
           action: call-service
           service: counter.reset
           target:
-            entity_id: >-
-              counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_carbonrods
           data: {}
         hold_action:
           action: none
@@ -729,8 +722,7 @@ sections:
           action: call-service
           service: counter.reset
           target:
-            entity_id: >-
-              counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
+            entity_id: counter.printer_bambulab_<BAMBULABPRINTER_ID>_maintenance_maindevice
           data: {}
         hold_action:
           action: none
@@ -751,7 +743,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: vertical-stack
@@ -775,9 +766,10 @@ sections:
                 state: "on"
             card:
               type: custom:mushroom-template-card
-			  primary: >-
+              primary: >-
                 {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
-                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
+                {% set alertLevel = errorMessage[14:] %}
+                {% set alertLevel = alertLevel[:4] %}
                 {% if alertLevel == '0002' %}
                 Warnung
                 {% elif alertLevel == '0003' %}
@@ -796,7 +788,8 @@ sections:
                 }}
               icon: >-
                 {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
-                {% set alertLevel = errorMessage[14:] %} {% set alertLevel = alertLevel[:4] %}
+                {% set alertLevel = errorMessage[14:] %}
+                {% set alertLevel = alertLevel[:4] %}
                 {% if alertLevel == '0002' %}
                 mdi:alert-circle
                 {% elif alertLevel == '0003' %}
@@ -817,7 +810,7 @@ sections:
               card_mod:
                 style: |
                   ha-card {
-                    {% set errorMessage = {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
+                    {% set errorMessage = state_attr('binary_sensor.<BAMBULABPRINTER_ID>_hms_errors','1-Error') %}
                     {% set alertLevel = errorMessage[14:] %}
                     {% set alertLevel = alertLevel[:4] %}
                     {% if alertLevel == '0002' %}
@@ -1041,7 +1034,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: custom:stack-in-card
@@ -1118,8 +1110,7 @@ sections:
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: >-
-                                /local/media/printerpage/extra_element_humidity_none.png
+                              image: /local/media/printerpage/extra_element_humidity_none.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
@@ -1135,8 +1126,7 @@ sections:
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: >-
-                                /local/media/printerpage/extra_element_humidity_1.png
+                              image: /local/media/printerpage/extra_element_humidity_1.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
@@ -1152,8 +1142,7 @@ sections:
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: >-
-                                /local/media/printerpage/extra_element_humidity_2.png
+                              image: /local/media/printerpage/extra_element_humidity_2.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
@@ -1169,8 +1158,7 @@ sections:
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: >-
-                                /local/media/printerpage/extra_element_humidity_3.png
+                              image: /local/media/printerpage/extra_element_humidity_3.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
@@ -1186,8 +1174,7 @@ sections:
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: >-
-                                /local/media/printerpage/extra_element_humidity_4.png
+                              image: /local/media/printerpage/extra_element_humidity_4.png
                         - type: conditional
                           conditions:
                             - condition: numeric_state
@@ -1202,8 +1189,7 @@ sections:
                                 left: 3%
                                 font-size: 0.8em
                                 color: rgba(0,0,0,0)
-                              image: >-
-                                /local/media/printerpage/extra_element_humidity_5.png
+                              image: /local/media/printerpage/extra_element_humidity_5.png
                     - type: conditional
                       conditions:
                         - entity: sensor.<BAMBULABPRINTER_AMS_ID>_ams_temperature
@@ -1358,7 +1344,6 @@ sections:
                     {%- else %}
                     background-image: url(/local/media/printerpage/printer_bambulab_ams_online.png) !important;
                     {%- endif %}
-                    
                   }
               image: /local/media/printerpage/printer_bambulab_ams_spacer.png
       - type: custom:mushroom-title-card
@@ -1373,7 +1358,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -1492,7 +1476,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -1564,7 +1547,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -1632,7 +1614,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: conditional
@@ -1707,7 +1688,6 @@ sections:
               h1.title {
                 font-size: medium;
                 font-weight: normal;
-                
               }
             }
       - type: vertical-stack
@@ -1726,8 +1706,7 @@ sections:
                 name: Spannung
               - entity: <POWER_CURRENTMETER_ID>
                 name: Strom
-              - entity: >-
-                  <POWER_DAYENERGYMETER_ID>
+              - entity: <POWER_DAYENERGYMETER_ID>
                 name: Tagesverbrauch
                 icon: mdi:meter-electric-outline
               - entity: <POWER_TOTALENERGYMETER_ID>
